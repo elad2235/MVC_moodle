@@ -1,0 +1,33 @@
+﻿@model  Mvcproject.ModelView.UsersViewModel
+@{
+    Layout = null;
+}
+@using Mvcproject.Models;
+@{ 
+    ViewBag.Title = "LoginPage";
+}
+
+    <div>
+        <script src="~/Scripts/jquery-3.4.1.js"></script>
+        <script src="~/Scripts/jquery.validate.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+        <h1><b>Login Page</b></h1>
+        <div>
+            @using (Html.BeginForm("Submit", "Login", FormMethod.Post))
+            {
+
+
+
+                <i>Username: </i> @Html.TextBoxFor(m => m.user.username) @Html.ValidationMessageFor(x => x.user.username)
+                <br />
+                <i>Paswword:</i> @Html.TextBoxFor(m => m.user.password) @Html.ValidationMessageFor(x => x.user.password)
+                <br />
+
+                <input id="Submit1" type="submit" value="Login" />
+                <br />
+                @Html.ValidationSummary()
+            }
+            <br />
+        </div>
+    </div>
