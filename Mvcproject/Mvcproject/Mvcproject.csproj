@@ -127,15 +127,20 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Dal\CoursesDal.cs" />
+    <Compile Include="Dal\CurrDal.cs" />
     <Compile Include="Dal\Faculty_Administrators_Dal.cs" />
     <Compile Include="Dal\StudiesDal.cs" />
     <Compile Include="ModelBinders\FacultyBinder.cs" />
     <Compile Include="ModelBinders\StudentsBinder.cs" />
     <Compile Include="ModelBinders\TeachersBinder.cs" />
     <Compile Include="Models\Courses.cs" />
+    <Compile Include="Models\Curriculum.cs" />
     <Compile Include="Models\Faculty_Administrators.cs" />
     <Compile Include="Dal\StudentsDal.cs" />
     <Compile Include="Dal\TeachersDal.cs" />
@@ -295,17 +300,16 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Login\LoginPage.cshtml" />
-    <Content Include="Views\Login\HomePageStudent.cshtml" />
-    <Content Include="Views\Login\HomePageAdmin.cshtml" />
-    <Content Include="Views\Login\HomePageTeacher.cshtml" />
-    <Content Include="Views\Login\AddStudent.cshtml" />
-    <Content Include="Views\Login\AssignStudent.cshtml" />
-    <Content Include="Views\Login\Assign.cshtml" />
-    <Content Include="Views\Login\NoStudent.cshtml" />
+    <Content Include="Views\Student\HomePageStudent.cshtml" />
+    <Content Include="Views\Admin\HomePageAdmin.cshtml" />
+    <Content Include="Views\Teacher\HomePageTeacher.cshtml" />
+    <Content Include="Views\Admin\AddStudent.cshtml" />
+    <Content Include="Views\Admin\AssignStudent.cshtml" />
+    <Content Include="Views\Admin\Assign.cshtml" />
+    <Content Include="Views\Admin\NoStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

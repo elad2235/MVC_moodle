@@ -12,7 +12,7 @@ namespace Mvcproject.Dal
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Studies>().ToTable("Studies");
+            modelBuilder.Entity<Studies>().ToTable("Studies").HasKey(t => new { t.course_id, t.student_id }); ;
         }
         public DbSet<Studies> Studies{ get; set; }
      

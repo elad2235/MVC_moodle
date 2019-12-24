@@ -1,0 +1,22 @@
+﻿@model Mvcproject.ModelView.UsersViewModel
+
+@{
+    Layout = null;
+}
+@using Mvcproject.Models;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View</title>
+</head>
+<body>
+    <div>
+        <h1>Hello admin:</h1> <h1><i>@Session["username"] </i> </h1>
+        <input type="button" value="Add Students" onclick="location.href='@Url.Action("AddStudent", "Admin")'" />
+        <input type="button" value="Assign Student" onclick="location.href='@Url.Action("AssignStudent", "Admin")'" />
+
+    </div>
+</body>
+</html>

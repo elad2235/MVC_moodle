@@ -11,7 +11,7 @@ namespace Mvcproject.Models
     {
         [Key]
         public int course_id { get; set; }
-        
+
         [Key]
         public int student_id { get; set; }
      
