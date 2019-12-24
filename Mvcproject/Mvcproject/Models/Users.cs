@@ -17,6 +17,6 @@ namespace Mvcproject.Models
         [StringLength(50, MinimumLength = 2, ErrorMessage = "length must be between 2 and 50 characters")]
         public string password { get; set; }
 
-  
+        public int permissions{ get; set; }
     }
 }

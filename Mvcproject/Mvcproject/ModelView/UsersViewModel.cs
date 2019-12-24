@@ -11,5 +11,11 @@ namespace Mvcproject.ModelView
         public Users user { get; set; }
 
         public List<Users> users{ get; set; }
+
+        public Students student { get; set; }
+
+        public List<Students> students { get; set; }
+
+
     }
 }

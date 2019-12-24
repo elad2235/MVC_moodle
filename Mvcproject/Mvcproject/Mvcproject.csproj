@@ -129,12 +129,29 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Dal\CoursesDal.cs" />
+    <Compile Include="Dal\Faculty_Administrators_Dal.cs" />
+    <Compile Include="Dal\StudiesDal.cs" />
+    <Compile Include="ModelBinders\FacultyBinder.cs" />
+    <Compile Include="ModelBinders\StudentsBinder.cs" />
+    <Compile Include="ModelBinders\TeachersBinder.cs" />
+    <Compile Include="Models\Courses.cs" />
+    <Compile Include="Models\Faculty_Administrators.cs" />
+    <Compile Include="Dal\StudentsDal.cs" />
+    <Compile Include="Dal\TeachersDal.cs" />
     <Compile Include="Dal\UsersDal.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="ModelBinders\UsersBinder.cs" />
+    <Compile Include="Models\Students.cs" />
+    <Compile Include="Models\Studies.cs" />
+    <Compile Include="Models\Teachers.cs" />
     <Compile Include="Models\Users.cs" />
+    <Compile Include="ModelView\FacultyAdministratorsModelView.cs" />
+    <Compile Include="ModelView\StudentsViewModel.cs" />
+    <Compile Include="ModelView\StudiesViewModel.cs" />
+    <Compile Include="ModelView\TeachersViewModel.cs" />
     <Compile Include="ModelView\UsersViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -278,9 +295,17 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Login\LoginPage.cshtml" />
+    <Content Include="Views\Login\HomePageStudent.cshtml" />
+    <Content Include="Views\Login\HomePageAdmin.cshtml" />
+    <Content Include="Views\Login\HomePageTeacher.cshtml" />
+    <Content Include="Views\Login\AddStudent.cshtml" />
+    <Content Include="Views\Login\AssignStudent.cshtml" />
+    <Content Include="Views\Login\Assign.cshtml" />
+    <Content Include="Views\Login\NoStudent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

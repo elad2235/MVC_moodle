@@ -1,0 +1,36 @@
+﻿@model Mvcproject.ModelView.UsersViewModel
+
+@{
+    Layout = null;
+}
+@using Mvcproject.Models;
+
+
+<div>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+    <h1><b>Add new student to the system</b></h1>
+    <div>
+        @using (Html.BeginForm("Submit", "Login", FormMethod.Post))
+        {
+
+            <i>First Name: </i> @Html.TextBoxFor(m => m.student.firstname) @Html.ValidationMessageFor(x => x.student.firstname)
+            <br />
+            <i>Last Name: </i> @Html.TextBoxFor(m => m.student.lastname) @Html.ValidationMessageFor(x => x.student.lastname)
+            <br />
+            <i>Username: </i> @Html.TextBoxFor(m => m.user.username) @Html.ValidationMessageFor(x => x.user.username)
+            <br />
+            <i>Paswword: </i> @Html.TextBoxFor(m => m.user.password) @Html.ValidationMessageFor(x => x.user.password)
+            <br />
+
+
+
+            <input id="Submit2" type="submit" value="Add Student" />
+            <br />
+            @Html.ValidationSummary()
+        }
+        <br />
+    </div>
+</div>
