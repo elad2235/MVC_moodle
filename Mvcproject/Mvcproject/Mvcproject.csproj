@@ -135,6 +135,7 @@
     <Compile Include="Dal\CoursesDal.cs" />
     <Compile Include="Dal\CurrDal.cs" />
     <Compile Include="Dal\Faculty_Administrators_Dal.cs" />
+    <Compile Include="Dal\GradesDal.cs" />
     <Compile Include="Dal\StudiesDal.cs" />
     <Compile Include="ModelBinders\FacultyBinder.cs" />
     <Compile Include="ModelBinders\StudentsBinder.cs" />
@@ -149,11 +150,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="ModelBinders\UsersBinder.cs" />
+    <Compile Include="Models\Grades.cs" />
     <Compile Include="Models\Students.cs" />
     <Compile Include="Models\Studies.cs" />
     <Compile Include="Models\Teachers.cs" />
     <Compile Include="Models\Users.cs" />
+    <Compile Include="ModelView\CurriculumViewModel.cs" />
     <Compile Include="ModelView\FacultyAdministratorsModelView.cs" />
+    <Compile Include="ModelView\GradesViewModel.cs" />
     <Compile Include="ModelView\StudentsViewModel.cs" />
     <Compile Include="ModelView\StudiesViewModel.cs" />
     <Compile Include="ModelView\TeachersViewModel.cs" />
@@ -305,8 +309,13 @@
     <Content Include="Views\Teacher\HomePageTeacher.cshtml" />
     <Content Include="Views\Admin\AddStudent.cshtml" />
     <Content Include="Views\Admin\AssignStudent.cshtml" />
-    <Content Include="Views\Admin\Assign.cshtml" />
-    <Content Include="Views\Admin\NoStudent.cshtml" />
+    <Content Include="Views\Admin\ChangeSchedule.cshtml" />
+    <Content Include="Views\Admin\ChangeExam.cshtml" />
+    <Content Include="Views\Admin\ChangeSchedule1.cshtml" />
+    <Content Include="Views\Admin\UpdateGrades.cshtml" />
+    <Content Include="Views\Admin\edit_curr.cshtml" />
+    <Content Include="Views\Admin\edit_course.cshtml" />
+    <Content Include="Views\Admin\edit_grade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,39 @@
+﻿@model Mvcproject.Models.Courses
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+   
+</head>
+<body>
+    <div>
+
+        @using (Html.BeginForm("Update_course", "Admin", FormMethod.Post))
+        {
+
+            <i> Course Name: @Model.course_name </i>
+            <br />
+            <i> Teacher ID: </i> @Html.TextBoxFor(m => m.teacher_id, new { placeholder = @Model.teacher_id, @class = "form-input" })
+            <br />
+            <i>Moed A date: </i> @Html.TextBoxFor(m => m.moed_A_date, new { placeholder = @Model.moed_A_date, @class = "form-input" })
+            <br />
+            <i>Moed B date: </i> @Html.TextBoxFor(m => m.moed_B_date, new { placeholder = @Model.moed_B_date, @class = "form-input" })
+            <br />
+            <i>Moed A time: </i> @Html.TextBoxFor(m => m.moed_A_hour, new { placeholder = @Model.moed_A_hour, @class = "form-input" })
+            <br />
+            <i>Moed B time: </i> @Html.TextBoxFor(m => m.moed_B_hour, new { placeholder = @Model.moed_B_hour, @class = "form-input" })
+            <br />
+            <input id="Submit3" type="submit" value="Update" />
+            <br />
+            @Html.ValidationSummary()
+        }
+        <br />
+
+    </div>
+</body>
+</html>

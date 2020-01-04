@@ -11,6 +11,7 @@ namespace Mvcproject.Models
 
         [Key]
         [Required]
+        [RegularExpression("^[1-9][0-9]{0,8}$", ErrorMessage = "Must have max of 9 digits")]
         public int student_id{ get; set; }
 
         [Required]

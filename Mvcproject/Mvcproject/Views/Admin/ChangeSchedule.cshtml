@@ -1,0 +1,19 @@
+﻿
+
+@{
+    Layout = null;
+}
+@using Mvcproject.Models;
+
+<div>
+   
+    <h1><b>choose what to manage</b></h1>
+    <div>
+        <ul style="border-spacing: initial;">
+            <li><input type="button" value="Manage schedule" onclick="location.href='@Url.Action("ChangeSchedule1", "Admin")'" /></li>
+            <li><input type="button" value="Manage exams" onclick="location.href='@Url.Action("ChangeExam", "Admin")'" /></li>
+            <li><input type="button" value="Manage grades" onclick="location.href='@Url.Action("UpdateGrades", "Admin")'" /></li>           
+        </ul>
+    </div>
+ 
+</div>

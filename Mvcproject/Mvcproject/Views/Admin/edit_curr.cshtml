@@ -1,0 +1,43 @@
+﻿@model Mvcproject.Models.Curriculum
+
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+    <title>edit_curr</title>
+
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+</head>
+<body>
+    <div id="editForm">
+
+        @using (Html.BeginForm("Update_cur", "Admin", FormMethod.Post))
+        {
+
+            <i> Course ID: @Model.course_id </i>
+            <br />
+            <i> Day: </i> @Html.TextBoxFor(m => m.day, new { placeholder = @Model.day, @class = "form-input" })
+            <br />
+            <i>Classroom: </i> @Html.TextBoxFor(m => m.classroom, new { placeholder = @Model.classroom, @class = "form-input" })
+            <br />
+            <i>Hour: </i> @Html.TextBoxFor(m => m.hour, new { placeholder = @Model.hour, @class = "form-input" })
+            <br />
+            <i>Duration: </i> @Html.TextBoxFor(m => m.duration, new { placeholder = @Model.duration, @class = "form-input" })
+            <br />
+            <input id="Submit3" type="submit" value="Update" />
+            <br />
+            @Html.ValidationSummary()
+        }
+        <br />
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+﻿@model  Mvcproject.ModelView.CurriculumViewModel
+@using Mvcproject.Models;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ChangeSchedule1</title>
+</head>
+<body>
+    <div>
+
+        <div>
+            <span style="color:blue">Courses schedules</span>
+            <br />
+            <table>
+                <tr>
+                    <td>Course id</td>
+                    <td>day</td>
+                    <td>time</td>
+                    <td>classroom</td>
+                    <td>duration</td>
+                </tr>
+                @foreach (Curriculum obj in Model.curriculums)
+                {
+                    <tr>
+                        <td>@obj.course_id</td>
+                        <td>@obj.day</td>
+                        <td>@obj.hour</td>
+                        <td>@obj.classroom</td>
+                        <td>@obj.duration</td>
+                        <td>@Html.ActionLink("Edit", "edit_curr", obj, new { @class = "classname" })</td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+    </div>
+</body>
+</html>

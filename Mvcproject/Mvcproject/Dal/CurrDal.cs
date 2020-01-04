@@ -12,7 +12,7 @@ namespace Mvcproject.Dal
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Curriculum>().ToTable("Curriculum").HasKey(t => new { t.time, t.classroom });
+            modelBuilder.Entity<Curriculum>().ToTable("Curriculum");
         }
         public DbSet<Curriculum> Curriculum { get; set; }
     }

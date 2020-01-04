@@ -10,18 +10,21 @@
     <script src="~/Scripts/jquery.validate.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
 
-    <h1><b>Add new student to the system</b></h1>
+    <h1 style="color:peru"><b>Assign student to a course</b></h1>
     <div>
+
         @using (Html.BeginForm("Assign", "Admin", FormMethod.Post))
         {
 
-            <i>Course Name: </i> @Html.TextBoxFor(m => m.course.course_name) @Html.ValidationMessageFor(x => x.course.course_name)
+            <i>Course Name: </i> @Html.TextBoxFor(m => m.course.course_name, new { @maxlength = "10", @class = "myCssClass" }) @Html.ValidationMessageFor(x => x.course.course_name)
             <br />
             <i>Student id: </i> @Html.TextBoxFor(m => m.student.student_id) @Html.ValidationMessageFor(x => x.student.student_id)
             <br />
-      
+
             <input id="Submit3" type="submit" value="Assign Student" />
             <br />
+            <div style="color: red;"><h6><i>@TempData["Message"]</i></h6></div>
+            <br/>
             @Html.ValidationSummary()
         }
         <br />
