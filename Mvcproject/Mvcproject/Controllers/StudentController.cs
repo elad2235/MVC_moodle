@@ -38,9 +38,16 @@ namespace Mvcproject.Controllers
 
             foreach(int c in course_list)
             {
-                cvm.curriculums.Add((from x in curdal.Curriculum
-                               where x.course_id == c
-                               select x).FirstOrDefault());
+                List<Curriculum> tmp = (from x in curdal.Curriculum
+                                        where x.course_id == c
+                                        select x).ToList<Curriculum>();
+                if (tmp != null)
+                {
+                    foreach (Curriculum c1 in tmp)
+                    {
+                        cvm.curriculums.Add(c1);
+                    }
+                }
             }
 
             foreach (int c in course_list)
@@ -51,7 +58,28 @@ namespace Mvcproject.Controllers
             }
             return View(cvm);
         }
+        public ActionResult View_Exams(Students s)
+        {
+           
+            StudiesDal stdal = new StudiesDal();
+            CurrDal curdal = new CurrDal();
+            CoursesDal cdal = new CoursesDal();
+            CurriculumViewModel cvm = new CurriculumViewModel();
+            List<int> course_list = (from x in stdal.Studies
+                                     where x.student_id == s.student_id
+                                     select x.course_id).ToList<int>();          
+            cvm.courses = new List<Courses>();
+
+            foreach (int c in course_list)
+            {
+                cvm.courses.Add((from x in cdal.Courses
+                                 where x.course_id == c
+                                 select x).FirstOrDefault());
+            }
+            return View(cvm);
+        }
         
+
 
     }
 }

@@ -2,6 +2,7 @@
 @using Mvcproject.Models
 @{
     Layout = null;
+    Courses temp = new Courses();
 }
 
 <!DOCTYPE html>
@@ -16,28 +17,46 @@
         <span style="color:blue">Courses schedules</span>
         <br />
         <table>
+
             <tr>
-                <td>Sunday</td>
-                <td>Monday</td>
-                <td>Tuesday</td>
-                <td>Wednesday</td>
+                <th></th>
+                <th>Sunday</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
 
             </tr>
+            <tr>
+            </tr>
+            
             @foreach (Curriculum obj in Model.curriculums)
             {
-                @Model.course = (from x in Model.courses where x.course_id == obj.course_id select x.course_name).FirstOrDefault();
+                foreach (Courses c in Model.courses)
+                {
+                    if (c.course_id == obj.course_id) { temp = c; }
+                }
+          
         <tr>
+            <td>10:00</td>
             @if (obj.day.Equals("a"))
             {
                 <td>
-                    @Model.course.course_name
+                    @temp.course_name
                 </td>
+            }
+            else
+            {
+                <td></td>
             }
             @if (obj.day.Equals("b"))
             {
                 <td>
-                    @Model.course.course_name
+                    @temp.course_name
                 </td>
+            }
+            else
+            {
+                <td></td>
             }
             @if (obj.day.Equals("c"))
             {
@@ -45,11 +64,19 @@
                     @Model.course.course_name
                 </td>
             }
+            else
+            {
+                <td></td>
+            }
             @if (obj.day.Equals("d"))
             {
                 <td>
-                    @Model.course.course_name
+                    @temp.course_name
                 </td>
+            }
+            else
+            {
+                <td></td>
             }
 
         </tr>

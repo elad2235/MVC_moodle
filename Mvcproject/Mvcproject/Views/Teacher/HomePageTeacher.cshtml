@@ -1,4 +1,4 @@
-﻿@model Mvcproject.ModelView.UsersViewModel
+﻿@model Mvcproject.Models.Teachers
 @{
     Layout = null;
 }
@@ -12,7 +12,10 @@
 </head>
 <body>
     <div>
-        <h1>Hello Teacher</h1>
+        <h1>Hello @Model.firstname @Model.lastname</h1>
+        <br/>
+        @Html.ActionLink("View Schedule", "View_TSchedule", @Model, new { @class = "classname" })
+        <br />
     </div>
 </body>
 </html>

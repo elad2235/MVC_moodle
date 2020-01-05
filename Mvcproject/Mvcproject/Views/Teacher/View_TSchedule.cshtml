@@ -1,0 +1,40 @@
+﻿@model Mvcproject.ModelView.CurriculumViewModel
+@using Mvcproject.Models
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View_TSchedule</title>
+</head>
+<body>
+    <div>
+        <span style="color:blue">Schedule </span>
+        <br />
+        <table>
+            <tr>
+                <td>Course id</td>
+                <td>Course Name</td>
+                <td>Day</td>
+                <td>Hour</td>
+                <td>Classroom</td>
+
+            </tr>
+            @foreach (Curriculum obj in Model.curriculums)
+            {
+        <tr>
+            <td>@obj.course_id</td>
+            <td>@obj.getCname()</td>
+            <td>@obj.day</td>
+            <td>@obj.hour</td>
+            <td>@obj.classroom</td>
+        </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

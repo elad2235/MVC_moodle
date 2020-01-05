@@ -1,0 +1,42 @@
+﻿@model Mvcproject.ModelView.CurriculumViewModel
+@using Mvcproject.Models;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View_Exams</title>
+</head>
+<body>
+    <div>
+        <span style="color:blue">Courses exams</span>
+        <br />
+        <table>
+            <tr>
+
+                <td>Course ID</td>
+                <td>Course name</td>
+                <td>Moed A date</td>
+                <td>Moed A time</td>
+                <td>Moed B date</td>
+                <td>Moed B time</td>
+            </tr>
+            @foreach (Courses obj in Model.courses)
+            {
+                <tr>
+                    <td>@obj.course_id</td>
+                    <td>@obj.course_name</td>
+                    <td>@obj.moed_A_date</td>
+                    <td>@obj.moed_A_hour</td>
+                    <td>@obj.moed_B_date</td>
+                    <td>@obj.moed_B_hour</td>            
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

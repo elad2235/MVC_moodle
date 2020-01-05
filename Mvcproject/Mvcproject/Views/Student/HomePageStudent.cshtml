@@ -14,8 +14,10 @@
     <div>
         <h1>Hello @Model.firstname @Model.lastname</h1>
         <br />
-        @Html.ActionLink("View Schedule", "View_Schedule",@Model, new { @class = "classname" })</td>
-        </tr>
+        @Html.ActionLink("View Schedule", "View_Schedule", @Model, new { @class = "classname" })
+        <br />
+        @Html.ActionLink("View Exams", "View_Exams", @Model, new { @class = "classname" })
+
 
     </div>
 </body>

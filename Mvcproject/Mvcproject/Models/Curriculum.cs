@@ -2,7 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-
+using Mvcproject.Dal;
+using Mvcproject.Models;
 
 namespace Mvcproject.Models
 {
@@ -19,5 +20,16 @@ namespace Mvcproject.Models
         public string classroom { get; set; }
 
         public int duration { get; set; }
+
+        public  string getCname()
+        {
+            CoursesDal cdal = new CoursesDal();
+            string name = (from x in cdal.Courses
+                           where x.course_id == this.course_id
+                           select x.course_name).FirstOrDefault();
+            return name;
+        }
     }
+
+   
 }
