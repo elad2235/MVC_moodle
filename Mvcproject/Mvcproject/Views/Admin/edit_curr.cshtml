@@ -1,5 +1,5 @@
-﻿@model Mvcproject.Models.Curriculum
-
+﻿@model Mvcproject.ModelView.CurriculumViewModel
+@using Mvcproject.Models;
 @{
     Layout = null;
 
@@ -22,22 +22,49 @@
         @using (Html.BeginForm("Update_cur", "Admin", FormMethod.Post))
         {
 
-            <i> Course ID: @Model.course_id </i>
+        <i> Course ID: @TempData["courseid"] </i>
             <br />
-            <i> Day: </i> @Html.TextBoxFor(m => m.day, new { placeholder = @Model.day, @class = "form-input" })
+            <i> Day: </i> @Html.TextBoxFor(m => m.curriculum.day)
             <br />
-            <i>Classroom: </i> @Html.TextBoxFor(m => m.classroom, new { placeholder = @Model.classroom, @class = "form-input" })
+            <i>Classroom: </i> @Html.TextBoxFor(m => m.curriculum.classroom)
             <br />
-            <i>Hour: </i> @Html.TextBoxFor(m => m.hour, new { placeholder = @Model.hour, @class = "form-input" })
+            <i>Hour: </i> @Html.TextBoxFor(m => m.curriculum.hour)
             <br />
-            <i>Duration: </i> @Html.TextBoxFor(m => m.duration, new { placeholder = @Model.duration, @class = "form-input" })
+            <i>Duration: </i> @Html.TextBoxFor(m => m.curriculum.duration, "{0:#.#}")
             <br />
             <input id="Submit3" type="submit" value="Update" />
             <br />
             @Html.ValidationSummary()
         }
         <br />
+        <table>
+            <tr>
+                <td>Day</td>
+                <td>Hour</td>
+                <td>Classroom</td>
+                <td>Duration</td>
 
+            </tr>
+            @if (Model.curriculums != null)
+            {
+                foreach (Curriculum obj in Model.curriculums)
+                {
+                    if (obj.course_id == Convert.ToInt32(TempData["courseid"].ToString()))
+                    {
+            <tr>
+                <td>@obj.day</td>
+                <td>@obj.hour</td>
+                <td>@obj.classroom</td>
+                <td>@obj.duration</td>
+                <td>@Html.ActionLink("Delete", "delete_curr", obj, new { @class = "classname" })</td>
+
+            </tr>
+                    }
+                }
+            }
+        </table>
+        <br />
+        <div style="color: red;"><h6>@TempData["Message"]</h6></div>
     </div>
 </body>
 </html>

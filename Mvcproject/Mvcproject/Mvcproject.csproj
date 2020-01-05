@@ -316,6 +316,10 @@
     <Content Include="Views\Admin\edit_curr.cshtml" />
     <Content Include="Views\Admin\edit_course.cshtml" />
     <Content Include="Views\Admin\edit_grade.cshtml" />
+    <Content Include="Views\Admin\edit_grade1.cshtml" />
+    <Content Include="Views\Admin\Course_list_assign.cshtml" />
+    <Content Include="Views\Admin\Curr_list.cshtml" />
+    <Content Include="Views\Student\View_Schedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

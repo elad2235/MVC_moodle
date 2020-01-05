@@ -32,6 +32,7 @@ namespace Mvcproject.Controllers
             objStudents.firstname = Request.Form["student.firstname"].ToString();
             objStudents.lastname = Request.Form["student.lastname"].ToString();
             objStudents.username = objUsers.username;
+            objStudents.student_id = 1;
             StudentsDal sdal = new StudentsDal();
 
             string find_user = (from x in dal.Users
@@ -51,17 +52,12 @@ namespace Mvcproject.Controllers
 
             if (ModelState.IsValid)
             { //checks if the post from the form is valid
-
-                try
-                {
+               
                     dal.Users.Add(objUsers); // in memory adding
                     dal.SaveChanges();
                     asvm.user = new Users();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("{0}", e);
-                }
+                
+              
 
                 sdal.Students.Add(objStudents); // in memory adding
                 sdal.SaveChanges();
@@ -94,79 +90,111 @@ namespace Mvcproject.Controllers
             CoursesDal cdal = new CoursesDal();
             StudentsDal sdal = new StudentsDal();
             StudiesDal stdal = new StudiesDal();
-            string course_name = Request.Form["course.course_name"];
+            int course_id = Convert.ToInt32(TempData["courseid"].ToString());
             int student_id = Convert.ToInt32(Request.Form["student.student_id"]);
-            List<Students> objStudents = (from x in sdal.Students
+            Students objStudents = (from x in sdal.Students
                                           where x.student_id.Equals(student_id)
-                                          select x).ToList<Students>();
+                                          select x).FirstOrDefault();
 
-            List<Courses> objCourses = (from x in cdal.Courses
-                                        where x.course_name.Equals(course_name)
-                                        select x).ToList<Courses>();
+            Courses objCourses = (from x in cdal.Courses
+                                        where x.course_id.Equals(course_id)
+                                        select x).FirstOrDefault();
 
-            if (objCourses.Count == 0 || objStudents.Count == 0)
+            Studies stpm = (from x in stdal.Studies
+                            where x.course_id == course_id && x.student_id == student_id
+                            select x).FirstOrDefault();
+
+
+            CurrDal currDal = new CurrDal();
+            int current_course_id = objCourses.course_id;
+            //curr of the course we want to assign
+            List<Curriculum> current_course = (from x in currDal.Curriculum
+                                               where x.course_id.Equals(current_course_id)
+                                               select x).ToList();
+            CurriculumViewModel cvm = new CurriculumViewModel();
+            cvm.course = (from x in cdal.Courses
+                          where x.course_id == course_id
+                          select x).FirstOrDefault();
+            cvm.curriculums = current_course;
+
+
+            if (stpm != null)
+            {
+                ModelState.AddModelError("", new Exception());
+                TempData["Message"] = "student already takes this course";
+                TempData["courseid"] = course_id;
+                return View("Curr_list",cvm);
+            }
+            if (objCourses == null || objStudents == null)
             {
                 ModelState.AddModelError("", new Exception());
                 TempData["Message"] = "student or course does not exist";
-                return View("AssignStudent");
+                TempData["courseid"] = course_id;
+                return View("Curr_list", cvm);
             }
 
-
+            //courses the student already study
             List<int> attending = (from x in stdal.Studies
                                    where x.student_id.Equals(student_id)
                                    select x.course_id).ToList<int>();
 
-
-            //notice that this stupid mvc dosent work well with class property get methods
-            CurrDal currDal = new CurrDal();
-            int current_course_id = objCourses[0].course_id;
-            List<Curriculum> current_course = (from x in currDal.Curriculum
-                                               where x.course_id.Equals(current_course_id)
-                                               select x).ToList();
-
             Boolean flag = false;
             foreach (int att in attending)
             {
+                //cuu for each course the student already study
                 List<Curriculum> tmp = (from x in currDal.Curriculum
                                         where x.course_id.Equals(att)
                                         select x).ToList();
-
-
-                if (tmp[0].day.Equals(current_course[0].day) && tmp[0].hour.Equals(current_course[0].hour))
+                foreach(Curriculum c in tmp)
                 {
-                    flag = true;
+                    foreach(Curriculum c1 in current_course)
+                    {//add check for durations
+                        if (c.day.Equals(c1.day) && c.hour.Equals(c1.hour)) flag = true;
+                    }
                 }
-                if (tmp.Count > 1 && current_course.Count > 1)
-                {
-                    if (tmp[1].day.Equals(current_course[1].day) && tmp[1].hour.Equals(current_course[1].hour)) flag = true;
-                }
+
             }
-
 
             if (flag)
             {
-
-                return View("AssignStudent");
+                ModelState.AddModelError("", new Exception());
+                TempData["Message2"] = "Student can't take two overlapping courses";
+                TempData["courseid"] = course_id;
+                return View("Curr_list", cvm);
             }
-
+       
             Studies objStudies = new Studies();
-            StudiesViewModel stvm = new StudiesViewModel();
-            objStudies.course_id = objCourses[0].course_id;
-            objStudies.student_id = objStudents[0].student_id;
+            
+            objStudies.course_id = objCourses.course_id;
+            objStudies.student_id = objStudents.student_id;
+
+           
             stdal.Studies.Add(objStudies); // in memory adding
             stdal.SaveChanges();
-            stvm.study = new Studies();
-            stvm.studies = stdal.Studies.ToList<Studies>();
-
-            return View("AssignStudent", stvm);
+            TempData["courseid"] = course_id;
+            return View("Curr_list", cvm);
         }
+        
+        public ActionResult Course_list_assign()
+        {
+            CurriculumViewModel cvm = new CurriculumViewModel();
+            CoursesDal cdal = new CoursesDal();
+            cvm.courses = cdal.Courses.ToList<Courses>();
+            return View(cvm);
+        }
+        public ActionResult Curr_list(Courses c)
+        {
+            TempData["courseid"] = c.course_id;
+            CurrDal curdal = new CurrDal();
+            List<Curriculum> cur = (from x in curdal.Curriculum
+                                    where x.course_id == c.course_id
+                                    select x).ToList<Curriculum>();
 
-
-    
-
-
-
-
+            CurriculumViewModel cvm = new CurriculumViewModel();
+            cvm.curriculums = cur;
+            cvm.course = c;           
+            return View(cvm);
+        }
         public ActionResult AssignStudent()
         {
             return View();
@@ -277,36 +305,52 @@ namespace Mvcproject.Controllers
 
         public ActionResult UpdateGrades()
         {
-            GradesViewModel gvm = new GradesViewModel();
+            CurriculumViewModel cvm = new CurriculumViewModel();
 
-            gvm.grade= new Grades();
-            GradesDal gdal = new GradesDal();
-            List<Grades> objGrades = gdal.Grades.ToList<Grades>();
-            gvm.grades= objGrades;
-            return View(gvm);
+            CoursesDal cdal = new CoursesDal();
+            cvm.courses = cdal.Courses.ToList<Courses>();
+            return View(cvm);
             
         }
        
-            public ActionResult UpdateGradesAction()
+        public ActionResult UpdateGradesAction()
         {
             GradesViewModel gvm = new GradesViewModel();
             gvm.grade = new Grades();
             GradesDal gdal = new GradesDal();
+            int cid = Convert.ToInt32(TempData["courseid"].ToString());
+            int sid = Convert.ToInt32(TempData["studentid"].ToString());
+            Grades grade = (from x in gdal.Grades
+                            where x.course_id == cid && x.student_id == sid
+                            select x).FirstOrDefault();
 
-            int courseid = Convert.ToInt32(Request.Form["grade.course_id"]);
-            int studentid = Convert.ToInt32(Request.Form["grade.student_id"]);
-            int moedAgrade = Convert.ToInt32(Request.Form["grade.moedA"]);
-            int moedBgrade = Convert.ToInt32(Request.Form["grade.moedB"]);
+            int moedAgrade = Convert.ToInt32(Request.Form["moedA"]);
+            int moedBgrade = Convert.ToInt32(Request.Form["moedB"]);
+            grade.moedA = moedAgrade;
+            grade.moedB = moedBgrade;
+            gdal.SaveChanges();
 
-            
 
-            return View(gvm);
+            List<Grades> studentList = (from x in gdal.Grades
+                                        where x.course_id == cid
+                                        select x).ToList<Grades>();
+            gvm.grades = studentList;
+            return View("edit_grade1", gvm);
 
         }
-        public ActionResult edit_curr(Curriculum cur)
+        public ActionResult edit_curr(Courses c)
         {
-            TempData["courseid"] = cur.course_id;
-            return View(cur);
+            CurrDal curdal = new CurrDal();
+            List<Curriculum> cur = (from x in curdal.Curriculum
+                                    where x.course_id == c.course_id
+                                    select x).ToList<Curriculum>();
+
+            TempData["courseid"] = c.course_id;
+            CurriculumViewModel cvm = new CurriculumViewModel();
+            cvm.curriculum = new Curriculum();
+            cvm.curriculums = cur;
+            cvm.course = c;
+            return View(cvm);
 
         }
         public ActionResult edit_grade(Grades g)
@@ -330,36 +374,59 @@ namespace Mvcproject.Controllers
             return View(g);
 
         }
-        
-        
+
+        public ActionResult edit_grade1(Courses c)
+        {
+            GradesDal gdal = new GradesDal();
+            List<Grades> studentList = (from x in gdal.Grades
+                                     where x.course_id == c.course_id
+                                     select x).ToList<Grades>();
+
+            GradesViewModel gvm = new GradesViewModel();
+            gvm.grades = studentList;
+            return View(gvm);
+
+        }
         public ActionResult Update_cur(Curriculum cur)
         {
 
             int id = Convert.ToInt32(TempData["courseid"].ToString());
-            string day = Request.Form["day"].ToString();
-            string hour = Request.Form["hour"].ToString();
-            string classroom = Request.Form["classroom"].ToString();
-            int duration = Convert.ToInt32(Request.Form["duration"]);
+            string day = Request.Form["curriculum.day"].ToString();
+            string hour = Request.Form["curriculum.hour"].ToString();
+            string classroom = Request.Form["curriculum.classroom"].ToString();
+            int duration = Convert.ToInt32(Request.Form["curriculum.duration"]);
             CurrDal curdal = new CurrDal();
             List<Curriculum> updateCurr = (from x in curdal.Curriculum
                                            where x.course_id == id
                                            select x).ToList<Curriculum>();
+            foreach (Curriculum c in updateCurr) {
+                if (c.day.Equals(day)) {
+                    ModelState.AddModelError("", new Exception());
+                    TempData["Message"] = "course already scheduled to this day";
+                   
+                }
+                    
+                }
+            Curriculum c1 = new Curriculum();
+            c1.course_id = id;
+            c1.day = day;
+            c1.hour = hour;
+            c1.classroom = classroom;
+            c1.duration = duration;
 
-            updateCurr[0].day = day;
-            updateCurr[0].hour = hour;
-            updateCurr[0].classroom = classroom;
-            updateCurr[0].duration = duration;
-            curdal.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                curdal.Curriculum.Add(c1);
+                curdal.SaveChanges();
+            }
 
-
-            CurriculumViewModel cvm = new CurriculumViewModel();
-
-           
-            CurrDal curdal2 = new CurrDal();
-            List<Curriculum> objCurriculums = curdal2.Curriculum.ToList<Curriculum>();
+            CurriculumViewModel cvm = new CurriculumViewModel();          
+            List<Curriculum> objCurriculums = curdal.Curriculum.ToList<Curriculum>();
             cvm.curriculums = objCurriculums;
-
-            return View("ChangeSchedule1",cvm);
+            cvm.curriculum = new Curriculum();
+            cvm.course = new Courses();
+            TempData["courseid"] = cur.course_id;
+            return View("edit_curr", cvm);
 
         }
         public ActionResult edit_course(Courses course)
@@ -523,6 +590,29 @@ namespace Mvcproject.Controllers
               
             return View("ChangeExam", cvm);
         }
+
+        public ActionResult delete_curr(Curriculum c)
+        {
+            CurrDal curdal = new CurrDal();
+           
+
+            Curriculum cur = (from x in curdal.Curriculum
+                              where x.id == c.id
+                              select x).FirstOrDefault();
+           
+                curdal.Curriculum.Remove(cur);
+                curdal.SaveChanges();
+     
+            CurriculumViewModel cvm = new CurriculumViewModel();
+            List<Curriculum> objCurriculums = curdal.Curriculum.ToList<Curriculum>();
+            cvm.curriculums = objCurriculums;
+            cvm.curriculum = new Curriculum();
+            cvm.course = new Courses();
+            TempData["courseid"] = cur.course_id;
+
+            return View("edit_curr", cvm);
+        }
+
     }
   
     

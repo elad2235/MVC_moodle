@@ -1,4 +1,4 @@
-﻿@model Mvcproject.ModelView.GradesViewModel
+﻿@model Mvcproject.ModelView.CurriculumViewModel
 @using Mvcproject.Models;
 @{
     Layout = null;
@@ -20,19 +20,16 @@
                 <table>
                     <tr>
                         <td>Course id</td>
-                        <td>student id</td>
-                        <td>moed A grade</td>
-                        <td>moed B grade</td>
+                        <td>Course Name</td>
+                      
 
                     </tr>
-                    @foreach (Grades obj in Model.grades)
+                    @foreach (Courses obj in Model.courses)
                     {
                 <tr>
                     <td>@obj.course_id</td>
-                    <td>@obj.student_id</td>
-                    <td>@obj.moedA</td>
-                    <td>@obj.moedB</td>
-                    <td>@Html.ActionLink("Edit", "edit_grade", obj, new { @class = "classname" })</td>
+                    <td>@obj.course_name</td>                   
+                    <td>@Html.ActionLink("Student list", "edit_grade1", obj, new { @class = "classname" })</td>
                 </tr>
                     }
                 </table>

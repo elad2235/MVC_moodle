@@ -1,0 +1,34 @@
+﻿@model Mvcproject.ModelView.CurriculumViewModel
+@using Mvcproject.Models;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Course_list_assign</title>
+</head>
+<body>
+    <div>
+        <span style="color:blue">Courses list</span>
+        <table>
+            <tr>
+                <td>Course id</td>
+                <td>Course Name</td>
+
+            </tr>
+            @foreach (Courses obj in Model.courses)
+            {
+                <tr>
+                    <td>@obj.course_id</td>
+                    <td>@obj.course_name</td>
+                    <td>@Html.ActionLink("Curriculum", "Curr_list", obj, new { @class = "classname" })</td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

@@ -9,8 +9,9 @@ namespace Mvcproject.Models
     public class Curriculum
     {
         [Key]
+        public int id { get; set; }
         public int course_id { get; set; }
-        
+
         public string day { get; set; }
 
         public string hour { get; set; }

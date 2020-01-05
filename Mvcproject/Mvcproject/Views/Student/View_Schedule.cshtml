@@ -1,0 +1,60 @@
+﻿@model Mvcproject.ModelView.CurriculumViewModel
+@using Mvcproject.Models
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View_Schedule</title>
+</head>
+<body>
+    <div>
+        <span style="color:blue">Courses schedules</span>
+        <br />
+        <table>
+            <tr>
+                <td>Sunday</td>
+                <td>Monday</td>
+                <td>Tuesday</td>
+                <td>Wednesday</td>
+
+            </tr>
+            @foreach (Curriculum obj in Model.curriculums)
+            {
+                @Model.course = (from x in Model.courses where x.course_id == obj.course_id select x.course_name).FirstOrDefault();
+        <tr>
+            @if (obj.day.Equals("a"))
+            {
+                <td>
+                    @Model.course.course_name
+                </td>
+            }
+            @if (obj.day.Equals("b"))
+            {
+                <td>
+                    @Model.course.course_name
+                </td>
+            }
+            @if (obj.day.Equals("c"))
+            {
+                <td>
+                    @Model.course.course_name
+                </td>
+            }
+            @if (obj.day.Equals("d"))
+            {
+                <td>
+                    @Model.course.course_name
+                </td>
+            }
+
+        </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

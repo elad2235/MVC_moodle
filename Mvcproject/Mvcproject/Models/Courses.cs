@@ -24,5 +24,9 @@ namespace Mvcproject.Models
         public string moed_B_date { get; set; }
         [RegularExpression("^[0-9]{2}:[0-9]{2}$", ErrorMessage = "Time should be in the form of [HH:MM]")]
         public string moed_B_hour { get; set; }
+
+       
     }
+
 }
+

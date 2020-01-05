@@ -10,5 +10,6 @@ namespace Mvcproject.ModelView
     {
         public Grades grade { get; set; }
         public List<Grades> grades { get; set; }
+        public List<Students> students { get; set; }
     }
 }

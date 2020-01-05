@@ -20,19 +20,14 @@
             <table>
                 <tr>
                     <td>Course id</td>
-                    <td>day</td>
-                    <td>time</td>
-                    <td>classroom</td>
-                    <td>duration</td>
+                    <td>Course Name</td>
+                  
                 </tr>
-                @foreach (Curriculum obj in Model.curriculums)
+                @foreach (Courses obj in Model.courses)
                 {
                     <tr>
                         <td>@obj.course_id</td>
-                        <td>@obj.day</td>
-                        <td>@obj.hour</td>
-                        <td>@obj.classroom</td>
-                        <td>@obj.duration</td>
+                        <td>@obj.course_name</td>
                         <td>@Html.ActionLink("Edit", "edit_curr", obj, new { @class = "classname" })</td>
                     </tr>
                 }

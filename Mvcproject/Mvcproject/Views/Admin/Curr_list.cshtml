@@ -1,0 +1,66 @@
+﻿@model Mvcproject.ModelView.CurriculumViewModel
+@using Mvcproject.Models;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Curr_list</title>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+    
+</head>
+<body>
+    <div>
+       
+        <h1 style="color:peru"><b>Assign student</b></h1>
+        <br />
+        @using (Html.BeginForm("Assign", "Admin", FormMethod.Post))
+        {
+   
+            <i>Student id: </i> @Html.TextBoxFor(m => m.student.student_id) @Html.ValidationMessageFor(x => x.student.student_id)
+            <br />
+
+            <input id="Submit3" type="submit" value="Assign Student" />
+            <br />
+            <div style="color: red;"><h1>@TempData["Message"]</h1></div>
+            <br />
+            <div style="color: red;"><h1>@TempData["Message2"]</h1></div>
+            <br />
+           
+        }
+        <br />
+        <span style="color:blue">@Model.course.course_name schedules</span>
+        <br />
+        <table>
+            <tr>
+                <td>Day</td>
+                <td>Hour</td>
+                <td>Classroom</td>
+                <td>Duration</td>
+
+            </tr>
+
+            @foreach (Curriculum obj in Model.curriculums)
+            {
+                <tr>
+                    <td>@obj.day</td>
+                    <td>@obj.hour</td>
+                    <td>@obj.classroom</td>
+                    <td>@obj.duration</td>
+     
+                </tr>
+
+            }
+
+        </table>
+        <br />
+    </div>
+</body>
+</html>

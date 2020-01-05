@@ -16,7 +16,7 @@
         <h1>Hello admin: @Session["username"] </h1>
         <ul>
             <li><input type="button" value="Add Students" onclick="location.href='@Url.Action("AddStudent", "Admin")'" /></li>
-            <li> <input type="button" value="Assign Student" onclick="location.href='@Url.Action("AssignStudent", "Admin")'" /></li>
+            <li> <input type="button" value="Assign Student" onclick="location.href='@Url.Action("Course_list_assign", "Admin")'" /></li>
             <li><input type="button" value="Manage courses schedule and exams" onclick="location.href='@Url.Action("ChangeSchedule", "Admin")'" /></li>
         </ul>
     </div>
