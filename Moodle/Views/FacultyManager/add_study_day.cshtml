@@ -1,0 +1,40 @@
+﻿<b>Add a study day for the course :</b>
+@using (Html.BeginForm("add_study_day", "FacultyManager", FormMethod.Post))
+{
+
+    <table class="blueTable">
+        <tr>
+            <td align="center">
+                <b>Classroom</b>
+            </td>
+            <td align="center">
+                <b>date and hour</b>
+</td>
+            <td align="center">
+                <b>Duration</b>
+</td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <input type="text" name="Classroom" value="" />
+            </td>
+            <td>
+                <input type="datetime" name="time" value="" />
+            </td>
+            <td>
+                <input type="text" name="dur" value="" />
+            </td>
+
+            <td align="center"><input id="Submit2" type="submit" value="Add" class="button-success"/></td>
+
+        </tr>
+
+    </table>
+
+    <br />
+    @Html.ValidationSummary(true)
+    <br />
+
+}
