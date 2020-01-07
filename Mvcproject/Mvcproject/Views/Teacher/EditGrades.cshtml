@@ -1,0 +1,38 @@
+﻿@model Mvcproject.Models.Grades
+
+@{
+    Layout = null;
+    TempData["studentid"] = Model.student_id;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EditGrades</title>
+</head>
+<body>
+    <div>
+        <span style="color:blue">Edit grade </span>
+        @using (Html.BeginForm("UpdateGrades", "Teacher", FormMethod.Post))
+        {
+            <i> Course Name: @Model.get_course_name() </i>
+            <br />
+            <i> Student ID: @Model.student_id </i>
+            <br />
+            <i> Student Name: @TempData["fname"]  @TempData["lname"]   </i>
+            <br />
+            <i> MoedA grade: </i> @Html.TextBoxFor(m => m.moedA, new { placeholder = @Model.moedA, @class = "form-input" })
+            <br />
+            <i>MoedB grade: </i> @Html.TextBoxFor(m => m.moedB, new { placeholder = @Model.moedB, @class = "form-input" })
+            <br />
+            <input id="Submit3" type="submit" value="Update" />
+            <br />
+            @Html.ValidationSummary()
+        }
+        <br />
+
+    </div>
+</body>
+</html>

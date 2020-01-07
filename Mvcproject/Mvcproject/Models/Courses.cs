@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Mvcproject.Dal;
 
 namespace Mvcproject.Models
 {
@@ -25,7 +26,22 @@ namespace Mvcproject.Models
         [RegularExpression("^[0-9]{2}:[0-9]{2}$", ErrorMessage = "Time should be in the form of [HH:MM]")]
         public string moed_B_hour { get; set; }
 
-       
+        public List<Students> get_Students_Of_Course()
+        {
+            StudentsDal sdal = new StudentsDal();
+            StudiesDal stdal = new StudiesDal();
+            List<int> students_id = (from x in stdal.Studies
+                                     where x.course_id == this.course_id
+                                     select x.student_id).ToList<int>();
+            List<Students> students = new List<Students>();
+            foreach (int s in students_id)
+            {
+                students.Add((from x in sdal.Students
+                              where x.student_id == s
+                              select x).FirstOrDefault());
+            }
+            return students;
+        }
     }
 
 }

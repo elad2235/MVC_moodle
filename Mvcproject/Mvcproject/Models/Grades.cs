@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Mvcproject.Dal;
 
 namespace Mvcproject.Models
 {
@@ -17,5 +18,14 @@ namespace Mvcproject.Models
         public int moedA { get; set; }
         [RegularExpression("^100|[1-9][0-9]|[0]$", ErrorMessage = "Grade B must be between 0-100")]
         public int moedB { get; set; }
+
+        public string get_course_name()
+        {
+            CoursesDal cdal = new CoursesDal();
+            return ((from x in cdal.Courses
+                    where x.course_id == this.course_id
+                    select x.course_name).FirstOrDefault());
+
+        }
     }
 }

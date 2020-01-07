@@ -322,6 +322,9 @@
     <Content Include="Views\Student\View_Schedule.cshtml" />
     <Content Include="Views\Student\View_Exams.cshtml" />
     <Content Include="Views\Teacher\View_TSchedule.cshtml" />
+    <Content Include="Views\Teacher\View_Courses.cshtml" />
+    <Content Include="Views\Teacher\View_Students.cshtml" />
+    <Content Include="Views\Teacher\EditGrades.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

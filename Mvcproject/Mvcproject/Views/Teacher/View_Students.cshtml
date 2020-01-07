@@ -1,0 +1,45 @@
+﻿@model Mvcproject.ModelView.StudentsViewModel
+@using Mvcproject.Models
+@{
+    Layout = null;
+    int course = Convert.ToInt32(TempData["courseid"]);
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>View_Students</title>
+</head>
+<body>
+    <div>
+        <span style="color:blue">Students list for @TempData["coursename"] </span>
+        <br />
+
+       
+            <table>
+                <tr>
+                    <td>Student id</td>
+                    <td>Student Name</td>
+                    <td>MoedA</td>
+                    <td>MoedB</td>
+
+                </tr>
+                @foreach (Students obj in Model.students)
+                {
+            <tr>   
+                <td>@obj.student_id</td>
+                <td>@obj.firstname @obj.lastname</td>
+                <td>@obj.get_MoedA_Grade_By_Courseid(course)</td>
+                <td>@obj.get_MoedB_Grade_By_Courseid(course)</td>
+                <td>@Html.ActionLink("Edit", "EditGrades", obj, new { @class = "classname" })</td>
+            </tr>
+                }
+                @{TempData["courseid"] = course}
+            </table>
+        
+        </div>
+</body>
+</html>
