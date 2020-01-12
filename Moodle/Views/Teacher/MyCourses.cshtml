@@ -1,0 +1,60 @@
+﻿@using Moodle.Models
+@using Moodle.Data_Access
+@model Moodle.Models.Courses
+
+@{
+    ViewBag.Title = "Courses";
+    CoursesData courses = new CoursesData();
+
+    int teacher_id = Int32.Parse(Session["id"].ToString());
+
+}
+   <link rel="stylesheet" type="text/css" href="../utils/tableDesign.css">
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Moodle", "Index", "Teacher", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("My Courses", "MyCourses", "Teacher")</li>
+                <li>@Html.ActionLink("Logout", "Logout", "Teacher")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<h2>My Courses: </h2>
+
+
+<div>
+        <br />
+        <table class="blueTable">
+            <tr>
+
+                <td align="center"><b>Course ID</b></td>
+                <td align="center"><b>Course name</b></td>
+                <td align="center"><b>Teacher ID</b></td>
+                <td></td>
+            </tr>
+            @foreach (Courses obj in courses.Courses.Where(x=> x.teacher_id == teacher_id).ToList())
+            {
+        <tr>
+            <td>@obj.course_id</td>
+            <td>@obj.course_name</td>
+            <td>@obj.teacher_id</td>
+            <td>@Html.ActionLink("View", "ViewCourse", obj, new { @class = "classname" })</td>
+        </tr>
+            }
+
+        </table>
+        <br />
+    <br />
+</div>
+
+

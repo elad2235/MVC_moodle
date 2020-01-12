@@ -1,0 +1,73 @@
+﻿@model Moodle.ViewModel.NewUserViewModel
+@{
+    ViewBag.Title = "Control Panel";
+}
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Moodle", "Index", "FacultyManager", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Courses", "ManageCourses", "FacultyManager")</li>
+                <li>@Html.ActionLink("Add a user", "newUser", "FacultyManager")</li>
+                <li>@Html.ActionLink("Logout", "Logout", "FacultyManager")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="../utils/tableDesign.css">
+
+
+
+
+<br />
+Add a user :
+<br />
+
+
+@using (Html.BeginForm("new_user", "FacultyManager", FormMethod.Post))
+{
+    <br />
+    <table class="blueTable">
+        <tr>
+            <td align="center">
+                <b>User Name:</b>
+            </td>
+            <td align="center">
+                <b>Password:</b>
+            </td>
+            <td align="center">
+                <b> First Name:</b>
+            </td>
+
+            <td align="center">
+                <b> Last Name:</b>
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td> @Html.TextBoxFor(m => m.user.username, new { @class = "form-input" }) </td>
+            <td> @Html.TextBoxFor(m => m.user.password, new { @class = "form-input" }) </td>
+            <td> @Html.TextBoxFor(m => m.student.firstname, new { @class = "form-input" }) </td>
+            <td> @Html.TextBoxFor(m => m.student.lastname, new { @class = "form-input" }) </td>
+            <td><select id="permission" name="permission">
+    <option>Teacher</option>
+    <option>Student</option>
+</select>
+                    </td>
+
+            <td align="center"><input id="Submit2" type="submit" value="Add" class="button-success" /></td>
+        </tr>
+    </table>
+
+
+    <br />
+    @Html.ValidationSummary()
+}

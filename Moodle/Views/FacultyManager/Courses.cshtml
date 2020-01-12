@@ -4,10 +4,10 @@
 
 @{
     ViewBag.Title = "Courses";
-
     CoursesData courses = new CoursesData();
+    TeachersData teach = new TeachersData();
 }
-    <link rel="stylesheet" type="text/css" href="../utils/tableDesign.css">
+   <link rel="stylesheet" type="text/css" href="../utils/tableDesign.css">
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -21,7 +21,8 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Courses", "Courses", "FacultyManager")</li>
-                <li>@Html.ActionLink("Grades", "About", "FacultyManager")</li>
+                <li>@Html.ActionLink("Add a user", "newUser", "FacultyManager")</li>
+                <li>@Html.ActionLink("Logout", "Logout", "FacultyManager")</li>
             </ul>
         </div>
     </div>
@@ -41,6 +42,8 @@
                 <td align="center"><b>Course ID</b></td>
                 <td align="center"><b>Course name</b></td>
                 <td align="center"><b>Teacher ID</b></td>
+                <td></td>
+                <td></td>
             </tr>
             @foreach (Courses obj in courses.Courses)
             {
@@ -48,18 +51,18 @@
                     <td>@obj.course_id</td>
                     <td>@obj.course_name</td>
                     <td>@obj.teacher_id</td>
-                    <td>@Html.ActionLink("Edit", "edit_course",obj, new { @class = "classname" })</td>
+                    <td>@Html.ActionLink("Edit", "edit_course", obj, new { @class = "classname" })</td>
                     <td>@Html.ActionLink("Delete", "delete_course", obj, new { @class = "classname" })</td>
                 </tr>
             }
 
-        <tr>
-            <td></td>
-            <td> @Html.TextBoxFor(m => m.course_name, new { placeholder = "Course Name", @class = "form-input" }) </td>
-            <td> @Html.TextBoxFor(m => m.teacher_id, "{0:#.#}", new { style = "width:70px", placeholder = "ID", @class = "form-input" })</td>
-            <td align="center"><input id="Submit2" type="submit" value="Add Course" class="button-success" /></td>
-            <td></td>
-        </tr>
+            <tr>
+                <td></td>
+                <td> @Html.TextBoxFor(m => m.course_name, new { placeholder = "Course Name", @class = "form-input" }) </td>
+                <td> @Html.TextBoxFor(m => m.teacher_id, "{0:#.#}", new { style = "width:70px", placeholder = "ID", @class = "form-input" })</td>
+                <td align="center"><input id="Submit2" type="submit" value="Add Course" class="button-success" /></td>
+                <td></td>
+            </tr>
 
         </table>
         <br />
@@ -71,7 +74,26 @@
 
         @Html.ValidationSummary(true)
     }
- 
+
+    <br />
+    <b>Faculty Teachers :</b>
+    <table class="blueTable">
+        <tr>
+            <td align="center"><b>ID</b></td>
+            <td align="center"><b>First name</b></td>
+            <td align="center"><b>Last Name</b></td>
+        </tr>
+        @foreach (Teachers obj in teach.Teachers)
+        {
+            <tr>
+                <td>@obj.teacher_id</td>
+                <td>@obj.firstname</td>
+                <td>@obj.lastname</td>
+
+            </tr>
+        }
+    </table>
+
 
     <br />
 </div>

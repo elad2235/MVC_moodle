@@ -1,0 +1,66 @@
+﻿@model Moodle.Models.Courses
+@using Moodle.Data_Access
+@using Moodle.Models
+
+
+@{
+    ViewBag.Title = "'"+Model.course_name+"' Control Panel";
+    TeachersData teach = new TeachersData();
+    TempData["course_id"] = Model.course_id;
+    Session["course_id"] = Model.course_id;
+}
+<link rel="stylesheet" type="text/css" href="../utils/tableDesign.css">
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Moodle", "Index", "FacultyManager", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Courses", "ManageCourses", "FacultyManager")</li>
+                <li>@Html.ActionLink("Logout", "Logout", "Teacher")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<h1>'@Model.course_name' Control Panel</h1>
+<br />
+    <br />
+    <table class="blueTable">
+        <tr>
+            <td align="center">
+                <b>Course name:</b>
+            </td>
+            <td align="center">
+                <b> Moed A:</b>
+            </td>
+            <td align="center">
+                <b> Moed B:</b>
+            </td>
+            <td align="center">
+                <b> course ID:</b>
+            </td>
+
+        </tr>
+        <tr>
+            <td> @Model.course_name </td>
+            <td> @Model.moed_A</td>
+            <td> @Model.moed_B</td>
+            <td>@Model.course_id</td>
+
+        </tr>
+    </table>
+
+
+    @Html.Partial("Course_Schedule",Model)
+
+
+
+<br />
+@Html.Partial("Students_study")

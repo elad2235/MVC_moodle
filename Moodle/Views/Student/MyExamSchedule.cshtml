@@ -1,0 +1,92 @@
+﻿@using Moodle.Data_Access
+@using Moodle.Models
+@{
+
+    //Data Definitions
+    string username = Session["username"].ToString();
+    StudentsData students = new StudentsData();
+    CoursesData courses = new CoursesData();
+    GradesData grades = new GradesData();
+    StudiesData studies = new StudiesData();
+    List<Studies> student_takes = new List<Studies>();
+    List<Courses> student_courses = new List<Courses>();
+    List<Grades> student_grades = new List<Grades>();
+
+    //getting Student info
+    Students student = students.Students.Where(x => x.username == username).FirstOrDefault();
+    student_takes = studies.Studies.Where(x => x.student_id == student.student_id).ToList();
+
+    foreach(Studies s in student_takes)
+    {
+        student_courses.Add(courses.Courses.Where(x => x.course_id==s.course_id).FirstOrDefault());
+    }
+
+    foreach(Courses c in student_courses)
+    {
+        student_grades.Add(grades.Grades.Where(x => x.course_id == c.course_id).FirstOrDefault());
+    }
+
+
+
+
+}
+
+<b>Your Exams Schedule: </b>
+<table class="blueTable">
+    <tr>
+        <td align="center"><b>Course ID</b></td>
+        <td align="center"><b>Course Name</b></td>
+        <td align="center"><b>Exam A</b></td>
+        <td align="center"><b>Exam B</b></td>
+        <td align="center"><b>Grade A</b></td>
+        <td align="center"><b>Grade B</b></td>
+    </tr>
+
+    @for (int i = 0; i < student_grades.Count(); i++)
+    {
+<tr>
+    <td align="center"><b>@student_courses[i].course_id</b></td>
+    <td align="center"><b>@student_courses[i].course_name</b></td>
+    <td align="center"><b>@student_courses[i].moed_A</b></td>
+    <td align="center"><b>@student_courses[i].moed_B</b></td>
+    @if (student_grades[i] != null)
+    {
+        if (student_courses[i].moed_A != null && DateTime.Now > student_courses[i].moed_A.Value)
+        {
+            <td align="center"><b>@student_grades[i].moedA</b></td>
+        }
+        else
+        {
+            <td align="center"><b></b></td>
+        }
+
+        if (student_courses[i].moed_B != null && DateTime.Now > student_courses[i].moed_B.Value)
+        {
+            <td align="center"><b>@student_grades[i].moedB</b></td>
+        }
+
+        else
+        {
+            <td align="center"><b></b></td>
+        }
+
+    }
+
+    @if (student_grades[i] == null)
+    {
+        <td align="center"><b></b></td>
+        <td align="center"><b></b></td>
+    }
+
+
+
+
+</tr>
+
+    }
+
+
+
+
+
+</table>

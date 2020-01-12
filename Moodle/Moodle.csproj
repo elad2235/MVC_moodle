@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net, Version=0.1.5073.29922, Culture=neutral, PublicKeyToken=6bcd409ee6bc9292, processorArchitecture=MSIL">
+      <HintPath>packages\BCrypt-Official.0.1.109\lib\BCrypt.Net.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -129,8 +132,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\FacultyManagerController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\TeacherController.cs" />
     <Compile Include="Data_Access\CoursesData.cs" />
     <Compile Include="Data_Access\CurriculumData.cs" />
+    <Compile Include="Data_Access\GradesData.cs" />
+    <Compile Include="Data_Access\StudentsData.cs" />
     <Compile Include="Data_Access\StudiesData.cs" />
     <Compile Include="Data_Access\TeachersData.cs" />
     <Compile Include="Data_Access\UsersData.cs" />
@@ -139,20 +146,25 @@
     </Compile>
     <Compile Include="Models\Courses.cs" />
     <Compile Include="Models\Curriculum.cs" />
+    <Compile Include="Models\Grades.cs" />
+    <Compile Include="Models\Students.cs" />
     <Compile Include="Models\Studies.cs" />
     <Compile Include="Models\Teachers.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\NewUserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\tableDesign.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="LICENSE.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -184,6 +196,19 @@
     <Content Include="Views\FacultyManager\editCourse.cshtml" />
     <Content Include="Views\FacultyManager\add_study_day.cshtml" />
     <Content Include="Views\FacultyManager\Course_Schedule.cshtml" />
+    <Content Include="Views\FacultyManager\Students_study.cshtml" />
+    <Content Include="Views\Teacher\Index.cshtml" />
+    <Content Include="Views\Teacher\MyCourses.cshtml" />
+    <Content Include="Views\Teacher\Students_study.cshtml" />
+    <Content Include="Views\Teacher\ViewCourse.cshtml" />
+    <Content Include="Views\Teacher\Course_Schedule.cshtml" />
+    <Content Include="Views\Teacher\EditGrade.cshtml" />
+    <Content Include="Views\Teacher\MySchedule.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\Student\MySchedule.cshtml" />
+    <Content Include="Views\Student\MyExamSchedule.cshtml" />
+    <Content Include="Views\FacultyManager\newUser.cshtml" />
+    <Content Include="Views\FacultyManager\EditGrade.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

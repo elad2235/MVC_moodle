@@ -2,9 +2,8 @@
 @using Moodle.Data_Access
 @using Moodle.Models
 
-
 @{
-    ViewBag.Title = "'"+Model.course_name+"' Control Panel";
+    ViewBag.Title = "'" + Model.course_name + "' Control Panel";
     TeachersData teach = new TeachersData();
     TempData["course_id"] = Model.course_id;
 }
@@ -22,14 +21,15 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Courses", "ManageCourses", "FacultyManager")</li>
-                <li>@Html.ActionLink("Grades", "About", "FacultyManager")</li>
+                <li>@Html.ActionLink("Add a user", "newUser", "FacultyManager")</li>
+                <li>@Html.ActionLink("Logout", "Logout", "FacultyManager")</li>
             </ul>
         </div>
     </div>
 </div>
 
 <h1>'@Model.course_name' Control Panel</h1>
-
+<br />
 @using (Html.BeginForm("update_course", "FacultyManager", FormMethod.Post))
 {
     <br />
@@ -37,24 +37,34 @@
         <tr>
             <td align="center">
                 <b>Course name:</b>
-</td>
+            </td>
             <td align="center">
                 <b>Teacher ID:</b>
-</td>
+            </td>
             <td align="center">
                 <b> Moed A:</b>
-</td>
+            </td>
+            <td align="center">
+                <b> Moed A Classroom:</b>
+            </td>
             <td align="center">
                 <b> Moed B:</b>
-</td>
+            </td>
+
+            <td align="center">
+                <b> Moed B Classroom:</b>
+            </td>
         </tr>
         <tr>
             <td> @Html.TextBoxFor(m => m.course_name, new { placeholder = Model.course_id, @class = "form-input" }) </td>
             <td> @Html.TextBoxFor(m => m.teacher_id, "{0:#.#}", new { style = "width:70px", placeholder = Model.teacher_id, @class = "form-input" })</td>
-            <td> @Html.EditorFor(m => m.moed_A, new { @value = Model.moed_A, @class = "datepicker" }) </td>
-            <td> @Html.EditorFor(m => m.moed_B, new { @value = Model.moed_B, @class = "datepicker" }) </td>
+            <td> @Html.EditorFor(m => m.moed_A, new {@value =Model.moed_A!=null? Model.moed_A.Value.ToString("dd/MM/yyyy HH:mm:ss"):"", @class = "datepicker" }) </td>
+            <td> @Html.TextBoxFor(m => m.examA_class, new { placeholder = Model.examA_class, @class = "form-input" }) </td>
+            <td> @Html.EditorFor(m => m.moed_B, new {@value =Model.moed_B!=null? Model.moed_B.Value.ToString("dd/MM/yyyy HH:mm:ss"):"", @class = "datepicker" }) </td>
+            <td> @Html.TextBoxFor(m => m.examB_class, new { placeholder = Model.examB_class, @class = "form-input" }) </td>
+
             @Html.HiddenFor(m => m.course_id, new { @value = Model.course_id })
-            <td align="center"><input id="Submit2" type="submit" value="Update" class="button-success"/></td>
+            <td align="center"><input id="Submit2" type="submit" value="Update" class="button-success" /></td>
         </tr>
     </table>
 
@@ -65,13 +75,13 @@
     @Html.ValidationMessageFor(x => x.teacher_id)
     <br />
 
-    @Html.Partial("Course_Schedule",Model)
+    @Html.Partial("Course_Schedule", Model)
 
 
-    @Html.ValidationSummary(true)
+
 
     <br />
-    <b>Teachers :</b>
+    <b>Faculty Teachers :</b>
     <table class="blueTable">
         <tr>
             <td align="center"><b>ID</b></td>
@@ -92,3 +102,5 @@
 
 <br />
 @Html.Partial("add_study_day")
+
+@Html.Partial("Students_study")

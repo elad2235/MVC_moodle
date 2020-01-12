@@ -5,23 +5,30 @@
     CurriculumData curr = new CurriculumData();
     List<Curriculum> schedule = curr.Curriculum.Where(x => x.course_id == Model.course_id).ToList();
 }
-
+<link rel="stylesheet" type="text/css" href="../utils/tableDesign.css">
+<link rel="stylesheet" type="text/css" href=".../utils/tableDesign.css">
+@using (Html.BeginForm("remove_lesson", "FacultyManager", FormMethod.Post))
+{
     <b>Course schedule</b>
-<table class="blueTable">
-    <tr>
 
-        <td align="center"><b>Date and Time</b></td>
-        <td align="center"><b>Classroom</b></td>
-        <td align="center"><b>Duration</b></td>
-    </tr>
-    @foreach (Curriculum obj in schedule)
-    {
+    <table class="blueTable">
         <tr>
-            <td>@obj.time</td>
-            <td>@obj.classroom</td>
-            <td>@obj.duration</td>
+
+            <td align="center"><b>Date and Time</b></td>
+            <td align="center"><b>Classroom</b></td>
+            <td align="center"><b>Duration</b></td>
         </tr>
-    }
+        @foreach (Curriculum obj in schedule)
+        {
+            <tr>
+                <td>@obj.time</td>
+                <td>@obj.classroom</td>
+                <td>@obj.duration</td>
+                <td align="center">@Html.ActionLink("Remove", "remove_lesson", obj, new { @class = "button-error" })</td>
+            </tr>
+        }
 
 
-</table>
+    </table>
+
+}

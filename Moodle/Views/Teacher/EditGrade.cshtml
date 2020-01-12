@@ -1,0 +1,45 @@
+﻿@model Moodle.Models.Grades
+
+<link rel="stylesheet" type="text/css" href="../utils/tableDesign.css">
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Moodle", "Index", "Teacher", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("My Courses", "MyCourses", "Teacher")</li>
+                <li>@Html.ActionLink("Logout", "Logout", "Teacher")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br />
+@using (Html.BeginForm("change_grade", "Teacher", FormMethod.Post))
+{
+    <b>Course ID: @Model.course_id</b>
+    <br />
+    <b>Student ID: @Model.student_id</b>
+    <br />
+    <b>Moed A Grade: </b> @Html.TextBoxFor(m => m.moedA, new { @class = "form-control", value = Model.moedA != null ? Model.moedA : -1 }); @Html.ValidationMessageFor(x => x.moedA);
+    <br />
+    <b>Moed B Grade: </b> @Html.TextBoxFor(m => m.moedB, new { @class = "form-control", value = Model.moedB == null ? Model.moedB : -1 }); @Html.ValidationMessageFor(x => x.moedB);
+    <br />
+    @Html.HiddenFor(m => m.course_id)
+    @Html.HiddenFor(m => m.student_id)
+
+    <input id="Submit1" type="submit" value="Update" />
+    <br />
+
+    @Html.ValidationSummary()
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>

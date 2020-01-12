@@ -4,7 +4,20 @@
     ViewBag.Title = "Login";
 }
 
+<link rel="stylesheet" type="text/css" href="../utils/tableDesign.css">
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Moodle", "Login", "Login", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
 
+    </div>
+</div>
 
 <div>
     <script src="~/Scripts/jquery-3.4.1.js"></script>
@@ -15,9 +28,9 @@
     <div>
         @using (Html.BeginForm("validate_user", "Login", FormMethod.Post))
         {
-            <i>Username: </i> @Html.TextBoxFor(m => m.username); @Html.ValidationMessageFor(x => x.username);
+            <i>User Name: </i> @Html.TextBoxFor(m => m.username, new { @class = "form-control" }); @Html.ValidationMessageFor(x => x.username);
             <br />
-            <i>password:</i> @Html.PasswordFor(m => m.password); @Html.ValidationMessageFor(x => x.password);
+            <i>Password:</i> @Html.PasswordFor(m => m.password, new { @class = "form-control" }); @Html.ValidationMessageFor(x => x.password);
             <br />
 
             <input id="Submit1" type="submit" value="Login" />

@@ -1,0 +1,294 @@
+﻿@using Moodle.Models;
+@using Moodle.Data_Access;
+
+@{
+
+    string username = Session["username"].ToString();
+    Teachers teacher = new TeachersData().Teachers.Where(x => x.username.Equals(username)).FirstOrDefault();
+    List<Curriculum> teacher_sc = teacher.get_Courses_Schedule();
+    List<Curriculum> weekly_sc = new List<Curriculum>();
+    CoursesData courses = new CoursesData();
+
+    Curriculum currId;
+
+    DateTime startOfWeek = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek);
+
+    foreach (Curriculum c in teacher_sc)
+    {
+        DateTime endOfWeek = startOfWeek.AddDays(7);
+        if (c.time >= startOfWeek && c.time <= endOfWeek)
+        {
+            weekly_sc.Add(c);
+        }
+    }
+    weekly_sc.OrderBy(x=> x.time);
+
+
+    List<Curriculum> sunday = new List<Curriculum>();
+
+    foreach(Curriculum c in weekly_sc)
+    {
+        if(c.time.Value.Date == startOfWeek.Date)
+        {
+            sunday.Add(c);
+        }
+    }
+
+
+    List<Curriculum> monday = new List<Curriculum>();
+
+    foreach(Curriculum c in weekly_sc)
+    {
+        if(c.time.Value.Date == startOfWeek.AddDays(1).Date)
+        {
+            monday.Add(c);
+        }
+    }
+
+    List<Curriculum> tuesday = new List<Curriculum>();
+
+    foreach(Curriculum c in weekly_sc)
+    {
+        if(c.time.Value.Date == startOfWeek.AddDays(2).Date)
+        {
+            tuesday.Add(c);
+        }
+    }
+
+    List<Curriculum> wednesday = new List<Curriculum>();
+
+    foreach(Curriculum c in weekly_sc)
+    {
+        if(c.time.Value.Date == startOfWeek.AddDays(3).Date)
+        {
+            wednesday.Add(c);
+        }
+    }
+
+    List<Curriculum> thursday = new List<Curriculum>();
+
+    foreach(Curriculum c in weekly_sc)
+    {
+        if(c.time.Value.Date == startOfWeek.AddDays(4).Date)
+        {
+            thursday.Add(c);
+        }
+    }
+
+    List<Curriculum> friday = new List<Curriculum>();
+
+    foreach(Curriculum c in weekly_sc)
+    {
+        if(c.time.Value.Date == startOfWeek.AddDays(5).Date)
+        {
+            friday.Add(c);
+        }
+    }
+
+    List<Curriculum> saturday = new List<Curriculum>();
+
+    foreach(Curriculum c in weekly_sc)
+    {
+        if(c.time.Value.Date == startOfWeek.AddDays(6).Date)
+        {
+            saturday.Add(c);
+        }
+    }
+    string c_name = "";
+    string c_class = "";
+    string c_time = "";
+
+}
+
+
+<b>Your Teaching Schedule For this Week: </b>
+    <table class="blueTable">
+        <tr>
+            <td align="center"><b>Hour</b></td>
+            <td align="center"><b>Sunday</b></td>
+            <td align="center"><b>Monday</b></td>
+            <td align="center"><b>Tuesday</b></td>
+            <td align="center"><b>Wednesday</b></td>
+            <td align="center"><b>Thursday</b></td>
+            <td align="center"><b>Friday</b></td>
+            <td align="center"><b>Saturday</b></td>
+        </tr>
+
+        @for (int hour = 8; hour < 22; hour++)
+        {
+    <tr>
+        <td>@hour</td>
+        <td>
+            <p hidden>
+            @{currId = sunday.Where(y => y.time.Value.Hour == hour).FirstOrDefault();}</p>
+
+            @if (currId != null)
+            {
+                
+                c_name = courses.Courses.Where(x => x.course_id == currId.course_id).FirstOrDefault().course_name;
+                c_class = sunday.Where(x => x.time.Value.Hour == hour).FirstOrDefault().classroom;
+
+                c_time =currId.time.Value.Hour.ToString() +":"+ currId.time.Value.Minute.ToString("D2");
+                c_time = c_time +"-" +currId.time.Value.AddHours(currId.duration).Hour.ToString() +":"+ currId.time.Value.Minute.ToString("D2");
+            }
+            @c_name     
+            @c_class
+            <br />
+            @c_time
+
+            @{
+                c_class = "";
+                c_name = "";
+                c_time = "";
+            }
+        </td>
+
+
+        <td>
+            <p hidden>
+                @{currId = monday.Where(y => y.time.Value.Hour == hour).FirstOrDefault();}
+            </p>
+            @if (currId != null)
+            {
+                c_name = courses.Courses.Where(x => x.course_id == currId.course_id).FirstOrDefault().course_name;
+                c_class = monday.Where(x => x.time.Value.Hour == hour).FirstOrDefault().classroom;
+                c_time = currId.time.Value.Hour.ToString() + ":" + currId.time.Value.Minute.ToString("D2");
+                c_time = c_time + "-" + currId.time.Value.AddHours(currId.duration).Hour.ToString() + ":" + currId.time.Value.Minute.ToString("D2");
+            }
+            @c_name
+            @c_class
+            <br />
+            @c_time
+
+            @{
+                c_class = "";
+                c_name = "";
+                c_time = "";
+            }
+        </td>
+
+        <td>
+            <p hidden>
+                @{currId = tuesday.Where(y => y.time.Value.Hour == hour).FirstOrDefault();}
+            </p>
+            @if (currId != null)
+            {
+                c_name = courses.Courses.Where(x => x.course_id == currId.course_id).FirstOrDefault().course_name;
+                c_class = tuesday.Where(x => x.time.Value.Hour == hour).FirstOrDefault().classroom;
+
+                c_time =currId.time.Value.Hour.ToString() + ":" + currId.time.Value.Minute.ToString("D2");
+                c_time = c_time + "-" + currId.time.Value.AddHours(currId.duration).Hour.ToString() + ":" + currId.time.Value.Minute.ToString("D2");
+            }
+            @c_name
+            @c_class
+            <br />
+            @c_time
+
+            @{
+                c_class = "";
+                c_name = "";
+                c_time = "";
+            }
+        </td>
+
+        <td>
+            <p hidden>
+                @{currId = wednesday.Where(y => y.time.Value.Hour == hour).FirstOrDefault();}
+            </p>
+            @if (currId != null)
+            {
+                c_name = courses.Courses.Where(x => x.course_id == currId.course_id).FirstOrDefault().course_name;
+                c_class = wednesday.Where(x => x.time.Value.Hour == hour).FirstOrDefault().classroom;
+
+                c_time =currId.time.Value.Hour.ToString() + ":" + currId.time.Value.Minute.ToString("D2");
+                c_time = c_time + "-" + currId.time.Value.AddHours(currId.duration).Hour.ToString() + ":" + currId.time.Value.Minute.ToString("D2");
+            }
+            @c_name
+            @c_class
+            <br />
+            @c_time
+
+            @{
+                c_class = "";
+                c_name = "";
+                c_time = "";
+            }
+        </td>
+
+        <td>
+            <p hidden>
+                @{currId = thursday.Where(y => y.time.Value.Hour == hour).FirstOrDefault();}
+            </p>
+            @if (currId != null)
+            {
+                c_name = courses.Courses.Where(x => x.course_id == currId.course_id).FirstOrDefault().course_name;
+                c_class = thursday.Where(x => x.time.Value.Hour == hour).FirstOrDefault().classroom;
+
+                c_time =currId.time.Value.Hour.ToString() + ":" + currId.time.Value.Minute.ToString("D2");
+                c_time = c_time + "-" + currId.time.Value.AddHours(currId.duration).Hour.ToString() + ":" + currId.time.Value.Minute.ToString("D2");
+            }
+            @c_name
+            @c_class
+            <br />
+            @c_time
+
+            @{
+                c_class = "";
+                c_name = "";
+                c_time = "";
+            }
+        </td>
+
+        <td>
+            <p hidden>
+                @{currId = friday.Where(y => y.time.Value.Hour == hour).FirstOrDefault();}
+            </p>
+            @if (currId != null)
+            {
+                c_name = courses.Courses.Where(x => x.course_id == currId.course_id).FirstOrDefault().course_name;
+                c_class = friday.Where(x => x.time.Value.Hour == hour).FirstOrDefault().classroom;
+
+                c_time =currId.time.Value.Hour.ToString() + ":" + currId.time.Value.Minute.ToString("D2");
+                c_time = c_time + "-" + currId.time.Value.AddHours(currId.duration).Hour.ToString() + ":" + currId.time.Value.Minute.ToString("D2");
+            }
+            @c_name
+            @c_class
+            <br />
+            @c_time
+
+            @{
+                c_class = "";
+                c_name = "";
+                c_time = "";
+            }
+        </td>
+
+        <td>
+            <p hidden>
+                @{currId = saturday.Where(y => y.time.Value.Hour == hour).FirstOrDefault();}
+            </p>
+            @if (currId != null)
+            {
+                c_name = courses.Courses.Where(x => x.course_id == currId.course_id).FirstOrDefault().course_name;
+                c_class = sunday.Where(x => x.time.Value.Hour == hour).FirstOrDefault().classroom;
+
+                c_time =currId.time.Value.Hour.ToString() + ":" + currId.time.Value.Minute.ToString("D2");
+                c_time = c_time + "-" + currId.time.Value.AddHours(currId.duration).Hour.ToString() + ":" + currId.time.Value.Minute.ToString("D2");
+            }
+            @c_name
+            @c_class
+            <br />
+            @c_time
+
+            @{
+                c_class = "";
+                c_name = "";
+                c_time = "";
+            }
+        </td>
+
+    </tr>
+        }
+
+
+    </table>

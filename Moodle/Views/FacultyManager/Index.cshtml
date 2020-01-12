@@ -15,11 +15,15 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Courses", "ManageCourses", "FacultyManager")</li>
-                <li>@Html.ActionLink("Grades", "About", "FacultyManager")</li>
+                <li>@Html.ActionLink("Add a user", "newUser", "FacultyManager")</li>
+                <li>@Html.ActionLink("Logout", "Logout", "FacultyManager")</li>
             </ul>
         </div>
     </div>
 </div>
 
 <h2>Hello, @Session["username"]</h2>
+
+
+
 

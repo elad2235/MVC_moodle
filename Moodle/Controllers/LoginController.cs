@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Moodle.Models;
 using System.Security.Cryptography;
 using Moodle.Data_Access;
+using BCrypt;
 
 namespace Moodle.Controllers
 {
@@ -13,6 +14,10 @@ namespace Moodle.Controllers
     {
         // GET: Login
         public ActionResult Index()
+        {
+            return View("Login");
+        }
+        public ActionResult Login()
         {
             return View("Login");
         }
@@ -26,10 +31,11 @@ namespace Moodle.Controllers
 
             if (ModelState.IsValid)
             {
+                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password);
 
-                Users isUser = users.Users.Where(x => x.username == user.username && user.password == x.password).FirstOrDefault();
+                Users isUser = users.Users.Where(x => x.username == user.username).FirstOrDefault();
 
-                if (isUser != null)
+                if (isUser != null && BCrypt.Net.BCrypt.Verify(user.password, hashedPassword))
                 {
                     Session["username"] = isUser.username;
                     Session["permission"] = isUser.permissions;
@@ -44,7 +50,7 @@ namespace Moodle.Controllers
 
 
 
-            return RedirectToRoute("Index", controller);
+            return RedirectToRoute(controller, controller);
         }
 
 
@@ -66,8 +72,8 @@ namespace Moodle.Controllers
                     return "Teacher";
 
 
-                case 4:
-                    return"Student";
+                case 3:
+                    return "Student";
 
             }
 

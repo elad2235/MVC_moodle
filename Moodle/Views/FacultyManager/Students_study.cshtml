@@ -1,0 +1,101 @@
+﻿@model Moodle.Models.Courses
+@using Moodle.Data_Access
+@using Moodle.Models
+
+@{
+    StudiesData studiesData = new StudiesData();
+    List<Studies> studies = studiesData.Studies.Where(x => x.course_id == Model.course_id).ToList();
+    List<Students> students_in_course = new List<Students>();
+    StudentsData studentsData = new StudentsData();
+
+    foreach (Studies s in studies)
+    {
+        students_in_course.Add(studentsData.Students.Where(x => x.student_id == s.student_id).FirstOrDefault());
+    }
+
+    GradesData grades = new GradesData();
+    List<(int,int,int)> students_grades = new List<(int,int,int)>();
+    List<(int, int)> final_grades = new List<(int, int)>();
+    foreach(Grades g in grades.Grades.Where(x => x.course_id == Model.course_id).ToList())
+    {
+
+
+        if(g.moedB == -1)
+        {
+            students_grades.Add((g.student_id, g.moedA,0));
+            final_grades.Add((g.student_id, g.moedA));
+        }
+        else
+        {
+            students_grades.Add((g.student_id, g.moedA,g.moedB));
+            final_grades.Add((g.student_id, g.moedB));
+        }
+    }
+
+
+    Session["course_id"] = Model.course_id;
+}
+
+
+
+
+<br />
+<b>Students Taking The Course: </b>
+@using (Html.BeginForm("delete_student_fCourse", "FacultyManager", FormMethod.Post))
+{
+    <table class="blueTable">
+        <tr>
+            <td align="center"><b>ID</b></td>
+            <td align="center"><b>First Name</b></td>
+            <td align="center"><b>Last Name</b></td>
+            <td align="center"><b>Grade A</b></td>
+            <td align="center"><b>Grade B</b></td>
+            <td align="center"><b>Final Grade</b></td>
+            <td></td>
+        </tr>
+        @foreach (Students s in students_in_course)
+        {
+    <tr>
+        <td>@s.student_id</td>
+        <td>@s.firstname</td>
+        <td>@s.lastname</td>
+        <td>@students_grades.Find(x => x.Item1 == s.student_id).Item2</td>
+        <td>@students_grades.Find(x => x.Item1 == s.student_id).Item3</td>
+        <td>@final_grades.Find(x => x.Item1 == s.student_id).Item2</td>
+        <td>@Html.ActionLink("Edit", "edit_Grade", s, new { @class = "classname" })</td>
+        <input type="hidden" id="course_id" name="course_id" value="@Model.course_id">
+        <input type="hidden" id="student_id" name="student_id" value="@s.student_id">
+        <td align="center">@Html.ActionLink("Remove", "delete_student_fCourse", s, new { @class = "button-error" })</td>
+    </tr>
+        }
+    </table>
+}
+
+<br />
+
+@using (Html.BeginForm("Add_student_fCourse", "FacultyManager", FormMethod.Post))
+{
+    <b>Students Not Taking Course: </b>
+    <table class="blueTable">
+        <tr>
+            <td align="center"><b>ID</b></td>
+            <td align="center"><b>First Name</b></td>
+            <td align="center"><b>Last Name</b></td>
+            <td></td>
+        </tr>
+        @foreach (Students s in studentsData.Students)
+        {
+            if (!students_in_course.Contains(s))
+            {
+    <tr>
+        <td>@s.student_id</td>
+        <td>@s.firstname</td>
+        <td>@s.lastname</td>
+        <input type="hidden" id="course_id" name="course_id" value="@Model.course_id">
+        <input type="hidden" id="student_id" name="student_id" value="@s.student_id">
+        <td align="center">@Html.ActionLink("Add", "Add_student_fCourse", s, new { @class = "button-success" })</td>
+    </tr>
+            }
+        }
+    </table>
+}

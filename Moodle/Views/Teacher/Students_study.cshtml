@@ -1,0 +1,79 @@
+﻿@model Moodle.Models.Courses
+@using Moodle.Data_Access
+@using Moodle.Models
+
+@{
+    StudiesData studiesData = new StudiesData();
+    List<Studies> studies = studiesData.Studies.Where(x => x.course_id == Model.course_id).ToList();
+    List<Students> students_in_course = new List<Students>();
+    StudentsData studentsData = new StudentsData();
+
+    foreach (Studies s in studies.Where(x => x.course_id==Model.course_id).ToList())
+    {
+        students_in_course.Add(studentsData.Students.Where(x => x.student_id == s.student_id).FirstOrDefault());
+    }
+    var gradeA = "";
+    var gradeB = "";
+    GradesData grades = new GradesData();
+    List<(int,string,string)> students_grades = new List<(int,string,string)>();
+    List<(int, string)> final_grades = new List<(int, string)>();
+    foreach (Grades g in grades.Grades.Where(x => x.course_id == Model.course_id).ToList())
+
+    {
+
+        if (g.moedA == -1)
+        {
+            gradeB = "";
+        }
+        else
+        {
+            gradeA = g.moedA.ToString();
+            final_grades.Add((g.student_id, gradeA));
+        }
+
+        if (g.moedB == -1)
+        {
+            gradeB = "";
+        }
+        else
+        {
+            gradeB = g.moedB.ToString();
+            final_grades.Add((g.student_id, gradeB));
+        }
+
+        students_grades.Add((g.student_id, gradeA, gradeB));
+    }
+}
+
+
+
+
+<br />
+<b>Students Taking The Course: </b>
+
+    <table class="blueTable">
+        <tr>
+            <td align="center"><b>ID</b></td>
+            <td align="center"><b>First Name</b></td>
+            <td align="center"><b>Last Name</b></td>
+            <td align="center"><b>Grade A</b></td>
+            <td align="center"><b>Grade B</b></td>
+            <td align="center"><b>Final Grade</b></td>
+            <td></td>
+        </tr>
+        @foreach (Students s in students_in_course)
+        {
+    <tr>
+        <td>@s.student_id</td>
+        <td>@s.firstname</td>
+        <td>@s.lastname</td>
+        <td>@students_grades.Find(x => x.Item1 == s.student_id).Item2</td>
+        <td>@students_grades.Find(x => x.Item1 == s.student_id).Item3</td>
+        <td>@final_grades.Find(x => x.Item1 == s.student_id).Item2</td>
+        <td align="center">@Html.ActionLink("Edit", "edit_grade",s, new { @class = "button-error" })</td>
+    </tr>
+        }
+    </table>
+
+<br />
+

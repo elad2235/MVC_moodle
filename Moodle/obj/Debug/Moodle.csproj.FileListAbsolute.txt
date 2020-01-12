@@ -80,3 +80,6 @@ C:\Users\Elad\source\repos\Moodle\obj\Debug\Moodle.csprojAssemblyReference.cache
 C:\Users\Elad\source\repos\Moodle\obj\Debug\Moodle.csproj.CopyComplete
 C:\Users\Elad\source\repos\Moodle\obj\Debug\Moodle.dll
 C:\Users\Elad\source\repos\Moodle\obj\Debug\Moodle.pdb
+C:\Users\Elad\source\repos\Moodle\bin\BCrypt.Net.dll
+C:\Users\Elad\source\repos\Moodle\bin\BCrypt.Net.pdb
+C:\Users\Elad\source\repos\Moodle\bin\BCrypt.Net.xml

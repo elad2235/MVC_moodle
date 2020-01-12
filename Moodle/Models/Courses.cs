@@ -19,6 +19,10 @@ namespace Moodle.Models
 
 
 
+        public string examA_class { get; set; }
+
+        public string examB_class { get; set; }
+
 
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]

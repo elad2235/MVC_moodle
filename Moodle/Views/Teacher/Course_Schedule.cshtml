@@ -1,0 +1,27 @@
+﻿@model Moodle.Models.Courses
+@using Moodle.Data_Access
+@using Moodle.Models
+@{
+    CurriculumData curr = new CurriculumData();
+    List<Curriculum> schedule = curr.Curriculum.Where(x => x.course_id == Model.course_id).ToList();
+}
+
+    <b>Course schedule</b>
+<table class="blueTable">
+    <tr>
+
+        <td align="center"><b>Date and Time</b></td>
+        <td align="center"><b>Classroom</b></td>
+        <td align="center"><b>Duration</b></td>
+    </tr>
+    @foreach (Curriculum obj in schedule)
+    {
+        <tr>
+            <td>@obj.time</td>
+            <td>@obj.classroom</td>
+            <td>@obj.duration</td>
+        </tr>
+    }
+
+
+</table>

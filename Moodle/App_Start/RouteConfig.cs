@@ -13,21 +13,44 @@ namespace Moodle
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
+
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
+                name: "Login",
+                url: "Login",
                 defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
             );
 
 
-
             routes.MapRoute(
-            name: "Index",
+            name: "FacultyManager",
             url: "FacultyManager",
             defaults: new { controller = "FacultyManager", action = "Index", id = UrlParameter.Optional }
             );
 
+            routes.MapRoute(
+            name: "Teacher",
+            url: "Teacher",
+            defaults: new { controller = "Teacher", action = "Index", id = UrlParameter.Optional }
+            );
 
+            routes.MapRoute(
+            name: "Student",
+            url: "Student",
+            defaults: new { controller = "Student", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+            name: "remove_lesson", 
+            url: "editCourse",
+            defaults: new { controller = "FacultyManager", action = "remove_lesson", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+            name: "Default",
+            url: "{controller}/{action}/{id}",
+            defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
+        );
         }
     }
 }
